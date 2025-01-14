@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://io7eddu6o603"]
+
+[ext_resource type="Script" path="res://Scripts/ball.gd" id="1_i4led"]
+[ext_resource type="Texture2D" uid="uid://bale3ckkancss" path="res://Sprites/ball.png" id="1_xudc3"]
+[ext_resource type="AudioStream" uid="uid://cg6n4khx7dwge" path="res://Sounds/Hit.wav" id="3_nrjpg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f82nx"]
+radius = 8.0
+
+[node name="ball" type="Node2D"]
+script = ExtResource("1_i4led")
+
+[node name="ballBody" type="CharacterBody2D" parent="."]
+collision_layer = 2
+collision_mask = 29
+
+[node name="Sprite2D" type="Sprite2D" parent="ballBody"]
+texture_filter = 1
+texture = ExtResource("1_xudc3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ballBody"]
+shape = SubResource("CircleShape2D_f82nx")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_nrjpg")

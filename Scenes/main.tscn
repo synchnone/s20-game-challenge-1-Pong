@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3 uid="uid://k2gkv3bjwoej"]
+
+[ext_resource type="PackedScene" uid="uid://t70yu7sy046l" path="res://Scenes/ui_scene.tscn" id="1_5fmru"]
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_t7olu"]
+[ext_resource type="PackedScene" uid="uid://dxftqdeu3fei0" path="res://Scenes/player_1.tscn" id="2_bo2kd"]
+[ext_resource type="PackedScene" uid="uid://cpaqstfwroqss" path="res://Scenes/menu.tscn" id="3_gsox4"]
+[ext_resource type="PackedScene" uid="uid://io7eddu6o603" path="res://Scenes/ball.tscn" id="4_jyv6i"]
+[ext_resource type="AudioStream" uid="uid://clawgvje832b2" path="res://Sounds/Score.wav" id="7_6qc2a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n46dl"]
+size = Vector2(20, 651)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8sw1l"]
+size = Vector2(1172, 20)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_t7olu")
+
+[node name="LeftWall" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 2
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+position = Vector2(0, 324.5)
+shape = SubResource("RectangleShape2D_n46dl")
+
+[node name="RightWall" type="Area2D" parent="."]
+position = Vector2(1152, 0)
+collision_layer = 16
+collision_mask = 2
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+position = Vector2(0, 325)
+shape = SubResource("RectangleShape2D_n46dl")
+
+[node name="UpperWall" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperWall"]
+position = Vector2(576, 0)
+shape = SubResource("RectangleShape2D_8sw1l")
+
+[node name="BottomWall" type="StaticBody2D" parent="."]
+position = Vector2(0, 648)
+collision_layer = 4
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall"]
+position = Vector2(576, 0)
+shape = SubResource("RectangleShape2D_8sw1l")
+
+[node name="Ui" type="CanvasLayer" parent="."]
+
+[node name="ui_scene" parent="Ui" instance=ExtResource("1_5fmru")]
+
+[node name="Menu" parent="Ui" instance=ExtResource("3_gsox4")]
+
+[node name="player_1" parent="." instance=ExtResource("2_bo2kd")]
+position = Vector2(40, 324)
+
+[node name="ball" parent="." instance=ExtResource("4_jyv6i")]
+position = Vector2(576, 324)
+
+[node name="ScoreSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_6qc2a")
+volume_db = -80.0
+autoplay = true
+
+[connection signal="body_entered" from="LeftWall" to="." method="_on_left_wall_body_entered"]
+[connection signal="body_entered" from="RightWall" to="." method="_on_right_wall_body_entered"]
